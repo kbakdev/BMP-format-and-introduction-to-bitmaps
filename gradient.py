@@ -8,7 +8,7 @@ import array
 WINDOW_W = 640
 WINDOW_H = 480
 pygame.display.init()
-windows = pygame.display.set_mode([WINDOW_W, WINDOW_H], 0, 24)
+window = pygame.display.set_mode([WINDOW_W, WINDOW_H], 0, 24)
 
 # Draw a black and red gradient with a separate buffer.
 W = 256
