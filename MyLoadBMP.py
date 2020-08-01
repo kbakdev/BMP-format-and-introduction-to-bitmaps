@@ -11,8 +11,9 @@ def MyLoadBMP(filename):
     with open(filename, "rb") as f:
         data = f.read()
 
-    if data[:2] != 'BM':
+    if data[:2] != b'BM':
         # Invalid BMP file.
+        print("Invalid BMP file.")
         return None
 
     # Will extract BITMAPFILEHEADER
@@ -23,12 +24,15 @@ def MyLoadBMP(filename):
 
     if biSize != 40:
         # Unsupported BMP variant.
+        print("Unsupported BMP variant.")
         return None
+        
     
     if biBitCount == 24 and biCompression == 0: #BI_RGB
         return MyLoadBMP_RGB24(data, bfOffBits, biWidth, biHeight)
 
     # Encoding not supported.
+    print("Encoding not supported.")
     return None
 
 def MyLoadBMP_RGB24(data, pixel_offset, w, h):
@@ -53,9 +57,9 @@ def MyLoadBMP_RGB24(data, pixel_offset, w, h):
 
     for y in r:
         for x in range(0, w):
-            bitmap[(x + y * w * 3 + 0)] = ord(data[pixel_offset + x * 3 + 0])
-            bitmap[(x + y * w * 3 + 1)] = ord(data[pixel_offset + x * 3 + 1])
-            bitmap[(x + y * w * 3 + 2)] = ord(data[pixel_offset + x * 3 + 2])
+            bitmap[(x + y * w) * 3 + 0] = ord(data[pixel_offset + x * 3 + 0])
+            bitmap[(x + y * w) * 3 + 1] = ord(data[pixel_offset + x * 3 + 1])
+            bitmap[(x + y * w) * 3 + 2] = ord(data[pixel_offset + x * 3 + 2])
         pixel_offset += pitch
 
     return (w, h, 24, bitmap)
@@ -67,7 +71,7 @@ pygame.display.init()
 window = pygame.display.set_mode([WINDOW_W, WINDOW_H], 0, 24)
 
 # Load a test bitmap.
-                                    image_w, image_h, image_bpp, image_data = MyLoadBMP("test.bmp")
+image_w, image_h, image_bpp, image_data = MyLoadBMP("test.bmp")
 
 # "Manually" copy the lines of the loaded bitmap to the pygame frame buffer.
 pixels = pygame.PixelArray(window)
