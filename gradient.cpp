@@ -5,7 +5,8 @@
 const int WINDOW_W = 640;
 const int WINDOW_H = 480;
 
-// SDL main has a habit of replacing stdin / stdout, which I personally don't like. The following removal of the main macro solves this problem (unfortunately it can also have other side effects in some cases).
+// SDL main has a habit of replacing stdin / stdout, which I personally don't like. The following removal of the main macro
+// solves this problem (unfortunately it can also have other side effects in some cases).
 #undef main
 int main() {
     // Create a 640x480 window.
@@ -75,5 +76,5 @@ int main() {
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
-    
+
 }
