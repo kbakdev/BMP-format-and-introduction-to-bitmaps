@@ -57,9 +57,9 @@ def MyLoadBMP_RGB24(data, pixel_offset, w, h):
 
     for y in r:
         for x in range(0, w):
-            bitmap[(x + y * w) * 3 + 0] = ord(data[pixel_offset + x * 3 + 0])
-            bitmap[(x + y * w) * 3 + 1] = ord(data[pixel_offset + x * 3 + 1])
-            bitmap[(x + y * w) * 3 + 2] = ord(data[pixel_offset + x * 3 + 2])
+            bitmap[(x + y * w) * 3 + 0] = data[pixel_offset + x * 3 + 0]
+            bitmap[(x + y * w) * 3 + 1] = data[pixel_offset + x * 3 + 1]
+            bitmap[(x + y * w) * 3 + 2] = data[pixel_offset + x * 3 + 2]
         pixel_offset += pitch
 
     return (w, h, 24, bitmap)
@@ -75,8 +75,8 @@ image_w, image_h, image_bpp, image_data = MyLoadBMP("test.bmp")
 
 # "Manually" copy the lines of the loaded bitmap to the pygame frame buffer.
 pixels = pygame.PixelArray(window)
-center_x = (WINDOW_W - image_w) / 2
-center_y = (WINDOW_H - image_h) / 2
+center_x = (WINDOW_W - image_w) // 2
+center_y = (WINDOW_H - image_h) // 2
 for y in range(image_h):
     for x in range(image_w):
         pixel = image_data[(x + y * image_w) * 3:(x + y * image_w) * 3 + 3]
